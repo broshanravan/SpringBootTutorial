@@ -2,12 +2,17 @@ package spring.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.beans.Course;
 import spring.beans.CourseConfiguration;
 import spring.entity.Employee;
+import spring.exceptions.EmployeeNotFoundException;
 import spring.service.impl.DashboardServiceImpl;
 
+import javax.persistence.EntityNotFoundException;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 
@@ -68,10 +73,20 @@ public class RestEntpoint {
         return courseInfo;
     }
 
-    @RequestMapping("/getEmployeeById")
-    public Employee getEmployeeById(@RequestParam(value ="employeeId" ,defaultValue = "1") int empId) {
-        Employee employee = dashboardServiceImpl.getEmployeeById(empId);
-        employee.show();
+    @GetMapping("/getEmployeeById/{empId}")
+    public Employee getEmployeeById(@PathVariable int empId) {
+        boolean validSearchResults = true;
+        Employee employee = null;
+        int employeeId;
+
+        try {
+            employee = dashboardServiceImpl.getEmployeeById(empId);
+            employee.show();
+        }catch (EmployeeNotFoundException enfe) {
+            System.out.println("======================================In Not found Exception");
+            System.out.println(enfe.getMessage());
+        }
+
         return employee;
 
     }
@@ -82,12 +97,18 @@ public class RestEntpoint {
 
     }
 
+
     @RequestMapping("/saveEmployee")
-    public Employee savelEmployees(@RequestBody Employee employee) {
-        return dashboardServiceImpl.saveEmployee(employee);
+    public ResponseEntity savelEmployees(@RequestBody Employee employee) {
+
+        dashboardServiceImpl.saveEmployee(employee);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(employee.getEmployeeId()).toUri();
+
+        return ResponseEntity.created(location).build();
+
     }
 
-    @RequestMapping("/updateEmployee")
+    @PostMapping("/updateEmployee")
     public Employee updateEmployees(@RequestBody Employee employee) {
         return dashboardServiceImpl.saveEmployee(employee);
     }

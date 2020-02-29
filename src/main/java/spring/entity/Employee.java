@@ -1,13 +1,18 @@
 package spring.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-@Table(name="employee", schema = "mehr_dev")
-public class Employee {
+@Table(name="employee", schema = "Mehr_Test")
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
+public class Employee implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name ="employee_id", unique = true, nullable = false)
     private int employeeId;
 
@@ -35,6 +40,7 @@ public class Employee {
 
     }
 
+    @JsonProperty
     public int getEmployeeId() {
         return employeeId;
     }
@@ -43,6 +49,7 @@ public class Employee {
         this.employeeId = employeeId;
     }
 
+    @JsonProperty
     public String getFirstName() {
         return firstName;
     }
@@ -51,6 +58,7 @@ public class Employee {
         this.firstName = firstName;
     }
 
+    @JsonProperty
     public String getSurname() {
         return surname;
     }
@@ -59,6 +67,7 @@ public class Employee {
         this.surname = surname;
     }
 
+    @JsonProperty
     public String getDepartment() {
         return department;
     }
@@ -67,6 +76,7 @@ public class Employee {
         this.department = department;
     }
 
+    @JsonProperty
     public int getAddressId() {
         return addressId;
     }
@@ -76,6 +86,7 @@ public class Employee {
     }
 
     public void show(){
+
         System.out.println("employeeId = " + employeeId);
         System.out.println("firstName = " + firstName);
         System.out.println("surname = " + surname);
@@ -83,7 +94,5 @@ public class Employee {
         System.out.println("addressId = " + addressId);
 
     }
-
-
 
 }

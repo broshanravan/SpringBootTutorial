@@ -28,10 +28,11 @@ public class SpringBootApp {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return super.configure(builder);
     }
-    */
+
 
     @Repository
     @Qualifier(value ="personnel")
     public static interface Personnel extends JpaRepository<Employee,Integer> {
     }
+    */
 }

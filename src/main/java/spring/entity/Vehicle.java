@@ -5,7 +5,7 @@ package spring.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name ="vehicle", schema="mehr_dev")
+@Table(name ="vehicle", schema="Mehr_Test")
 public class Vehicle {
 
     @Id
