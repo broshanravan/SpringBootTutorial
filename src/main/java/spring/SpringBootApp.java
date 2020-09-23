@@ -5,11 +5,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.stereotype.Repository;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import spring.entity.Employee;
+
+import java.util.Locale;
 
 
 @SpringBootApplication
@@ -23,16 +27,21 @@ public class SpringBootApp {
 
     }
 
-    /*
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return super.configure(builder);
+
+    @Bean
+    public LocaleResolver localeResolver(){
+        SessionLocaleResolver locateResolver = new SessionLocaleResolver();
+        locateResolver.setDefaultLocale(Locale.UK);
+        return locateResolver;
     }
 
 
-    @Repository
-    @Qualifier(value ="personnel")
-    public static interface Personnel extends JpaRepository<Employee,Integer> {
+    @Bean
+    public ResourceBundleMessageSource bundleMessageSource(){
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("messages");
+        return messageSource;
+
     }
-    */
+
 }

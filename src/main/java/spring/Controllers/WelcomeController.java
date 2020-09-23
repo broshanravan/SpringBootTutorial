@@ -1,12 +1,12 @@
 package spring.Controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.context.MessageSource;
+import org.springframework.web.bind.annotation.*;
 import spring.beans.HelloBean;
 import spring.components.WelcomeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Locale;
 
 @RestController
 public class WelcomeController {
@@ -14,12 +14,18 @@ public class WelcomeController {
     @Autowired
     private WelcomeService service;
 
+    @Autowired
+    private MessageSource messageSource;
 
     @RequestMapping("/welcome")
     public String welcome(){
         return  service.receiveWelcomeMessage();//"<b>welcome to my first SpringBoot page:</b>";
     }
 
+    @RequestMapping("/welcome-internationalized")
+    public String welcomeInternationalized() {
+        return service.receiveWelcomeMessage();
+    }
 
     /**Functions with path variable */
 
@@ -28,5 +34,12 @@ public class WelcomeController {
         return new HelloBean(String.format("Hello Mr, %s", name),String.format("Your message is:, %s", message));
 
     }
+
+    @GetMapping("/hello-world-internationalized")
+    public String helloWorldInternationalized(@RequestHeader(name="Accept-Language",required =false) Locale locale){
+        return messageSource.getMessage("good.morning.message", null, locale);
+
+    }
+
 
 }

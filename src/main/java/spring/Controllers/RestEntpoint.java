@@ -49,15 +49,15 @@ public class RestEntpoint {
     }
 
 
-    @RequestMapping("/defaultCourse")
-    public Course getDefaultEndPoint(@RequestParam(value ="name" ,defaultValue = "SpringBoot", required = false) String name,
+    @GetMapping("/defaultCourse")
+    public Course getDefaultEndPoint(@RequestParam(value ="name" ,defaultValue = "SpringBoot", required = false)String name,
                               @RequestParam(value ="chapterCount" ,defaultValue = "3", required = false) int chapterCount
     ){
 
         return new Course(cName, chapters);
     }
 
-    @RequestMapping("/course")
+    @GetMapping("/course")
     public Course getEndPoint(@RequestParam(value ="name" ,defaultValue = "SpringBoot", required = false) String name,
                               @RequestParam(value ="chapterCount" ,defaultValue = "3", required = false) int chapterCount
     ){
@@ -77,15 +77,23 @@ public class RestEntpoint {
     public Employee getEmployeeById(@PathVariable int empId) {
         boolean validSearchResults = true;
         Employee employee = null;
-        int employeeId;
+        employee = dashboardServiceImpl.getEmployeeById(empId);
+        System.out.println("_____________ GET BY ID______________");
+        if(employee == null){
+            System.out.println("_____________inside Exception______________");
+            throw new EmployeeNotFoundException("id-" + empId);
+        }
 
+        /*
         try {
-            employee = dashboardServiceImpl.getEmployeeById(empId);
+            ;
             employee.show();
         }catch (EmployeeNotFoundException enfe) {
             System.out.println("======================================In Not found Exception");
             System.out.println(enfe.getMessage());
         }
+
+         */
 
         return employee;
 
@@ -98,7 +106,7 @@ public class RestEntpoint {
     }
 
 
-    @RequestMapping("/saveEmployee")
+    @PostMapping("/saveEmployee")
     public ResponseEntity savelEmployees(@RequestBody Employee employee) {
 
         dashboardServiceImpl.saveEmployee(employee);
@@ -108,7 +116,7 @@ public class RestEntpoint {
 
     }
 
-    @PostMapping("/updateEmployee")
+    @PutMapping("/updateEmployee")
     public Employee updateEmployees(@RequestBody Employee employee) {
         return dashboardServiceImpl.saveEmployee(employee);
     }

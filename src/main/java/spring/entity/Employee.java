@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
@@ -17,6 +18,7 @@ public class Employee implements Serializable {
     private int employeeId;
 
     @Column(name="first_name")
+    @Size(min =2, message= "name should have at lleast two characters")
     private String firstName;
 
     @Column(name="surname")

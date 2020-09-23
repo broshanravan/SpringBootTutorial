@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 public class WelcomeService{
 
     public String receiveWelcomeMessage() {
-        return "<i><b>What's up<b></i>";
+
+
+        return "<b><i><h1>What's up</h1></i></b>";
     }
 
 }
