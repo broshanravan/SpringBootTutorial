@@ -78,22 +78,21 @@ public class RestEntpoint {
         boolean validSearchResults = true;
         Employee employee = null;
         employee = dashboardServiceImpl.getEmployeeById(empId);
-        System.out.println("_____________ GET BY ID______________");
-        if(employee == null){
+        System.out.println("_____________ GET EMPLOYEE BY ID______________");
+        if(employee.getFirstName() == null){
             System.out.println("_____________inside Exception______________");
             throw new EmployeeNotFoundException("id-" + empId);
         }
 
-        /*
+
         try {
-            ;
             employee.show();
         }catch (EmployeeNotFoundException enfe) {
             System.out.println("======================================In Not found Exception");
-            System.out.println(enfe.getMessage());
+            //System.out.println(enfe.getMessage());
         }
 
-         */
+
 
         return employee;
 
