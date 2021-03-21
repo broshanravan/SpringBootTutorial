@@ -2,19 +2,28 @@ package spring.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.beans.Course;
 import spring.beans.CourseConfiguration;
+import spring.entity.Address;
 import spring.entity.Employee;
 import spring.exceptions.EmployeeNotFoundException;
+import spring.repositories.AddressInventory;
+import spring.repositories.Personnel;
 import spring.service.impl.DashboardServiceImpl;
 
 import javax.persistence.EntityNotFoundException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
 @RestController
 public class RestEntpoint {
@@ -33,7 +42,13 @@ public class RestEntpoint {
     @Autowired
     private CourseConfiguration courseConfiguration;
 
-    @RequestMapping("/getHierarchical")
+    @Autowired
+    private Personnel personnel;
+
+    @Autowired
+    AddressInventory addressInventory;
+
+    @GetMapping("/getHierarchical")
     public  HashMap<String,Object> getDAnnotatedProperties(){
 
         HashMap<String,Object> courseMap = new HashMap<String,Object>();
@@ -73,35 +88,39 @@ public class RestEntpoint {
         return courseInfo;
     }
 
-    @GetMapping("/getEmployeeById/{empId}")
-    public Employee getEmployeeById(@PathVariable int empId) {
-        boolean validSearchResults = true;
-        Employee employee = null;
-        employee = dashboardServiceImpl.getEmployeeById(empId);
-        System.out.println("_____________ GET EMPLOYEE BY ID______________");
-        if(employee.getFirstName() == null){
-            System.out.println("_____________inside Exception______________");
-            throw new EmployeeNotFoundException("id-" + empId);
-        }
+    @RequestMapping("/employee/{employeeId}")
+    public Resource<Employee> getEmployeeById(@PathVariable int employeeId)  {
 
-
-        try {
+        /**
+         * HATEOAS all employees link to other methods
+         * This feature can all link to all other method
+         * the advantage is that in case the link for child method is changed
+         * the lonk provided by parent method does not need to be changef
+         */
+        Resource<Employee> employeeResource = null;
+        try{
+            Employee employee = personnel.getOne(employeeId);
             employee.show();
-        }catch (EmployeeNotFoundException enfe) {
-            System.out.println("======================================In Not found Exception");
-            //System.out.println(enfe.getMessage());
+
+            employeeResource = new Resource<Employee>(employee);
+            ControllerLinkBuilder linkTo =  linkTo(methodOn(this.getClass()).getAllEmployees());
+
+            employeeResource.add(linkTo.withRel("all-employees"));
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+            throw  new EmployeeNotFoundException(employeeId);
         }
 
-
-
-        return employee;
-
+        return employeeResource;
     }
 
-    @RequestMapping("/getAllEmployees")
-    public List<Employee> getAllEmployees() {
-        return dashboardServiceImpl.getAllEmployees();
 
+    @RequestMapping("/allEmployees")
+    public List<Employee> getAllEmployees() {
+        List<Employee> allEmployees = dashboardServiceImpl.getAllEmployees();
+        return allEmployees;
     }
 
 
@@ -120,6 +139,9 @@ public class RestEntpoint {
         return dashboardServiceImpl.saveEmployee(employee);
     }
 
-
+    @GetMapping("/address/{addressId}")
+    public Address getAddressById(@PathVariable int addressId){
+        return addressInventory.getOne(addressId);
+    }
 
 }

@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import spring.entity.Employee;
 import spring.entity.Vehicle;
 import spring.exceptions.EmployeeNotFoundException;
@@ -15,7 +17,7 @@ import spring.service.DashboardService;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
-@Component
+@RestController
 public class DashboardServiceImpl implements DashboardService {
 
 
@@ -25,19 +27,19 @@ public class DashboardServiceImpl implements DashboardService {
     @Autowired
     VehicleRepository vehicleRepository;
 
-    @GetMapping("/employees/{employeeId}")
-    public Employee getEmployeeById(@PathVariable int employeeId) throws EmployeeNotFoundException {
+    @RequestMapping("/employees/{employeeId}")
+    public Employee getEmployeeById(@PathVariable int employeeId) {
 
         Employee employee = personnel.getOne(employeeId);
         if(employee == null){
-            throw new EmployeeNotFoundException("id-" + employeeId);
+
         }
 
         return employee;
     }
 
-    @GetMapping("/vehicles/{vehicleId}")
-    public Vehicle getVehiccleById(@PathVariable int vehicleId) throws EmployeeNotFoundException {
+    @RequestMapping("/vehicles/{vehicleId}")
+    public Vehicle getVehicleById(@PathVariable int vehicleId) {
 
         Vehicle vehicle = vehicleRepository.getOne(vehicleId);
         if(vehicle == null){

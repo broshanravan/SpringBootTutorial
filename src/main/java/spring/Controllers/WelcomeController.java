@@ -16,6 +16,7 @@ public class WelcomeController {
 
     @Autowired
     private MessageSource messageSource;
+    //private Locale locale;
 
     @RequestMapping("/welcome")
     public String welcome(){
@@ -24,12 +25,14 @@ public class WelcomeController {
 
     @RequestMapping("/welcome-internationalized")
     public String welcomeInternationalized() {
-        return service.receiveWelcomeMessage();
+        return service.receiveWelcomeMessageInternationalized();
     }
 
     /**Functions with path variable */
 
-    @GetMapping("hello-sir/path-variable/{message}/{name}")
+
+
+    @GetMapping("/hello-sir/path-variable/{message}/{name}")
     public HelloBean helloWithPathVariable(@PathVariable String name, @PathVariable String message){
         return new HelloBean(String.format("Hello Mr, %s", name),String.format("Your message is:, %s", message));
 
@@ -40,6 +43,9 @@ public class WelcomeController {
         return messageSource.getMessage("good.morning.message", null, locale);
 
     }
+
+
+
 
 
 }

@@ -8,8 +8,9 @@ import java.util.List;
 public interface DashboardService {
 
     public Employee getEmployeeById(int employeeId);
+    public Vehicle getVehicleById(int VehicleId);
+
     public List<Employee> getAllEmployees();
     public Employee saveEmployee(Employee employee);
-    public Vehicle getVehiccleById(int VehicleId);
 
 }
