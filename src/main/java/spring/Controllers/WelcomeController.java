@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Locale;
 
 @RestController
+@RequestMapping("/api")
 public class WelcomeController {
 
     @Autowired

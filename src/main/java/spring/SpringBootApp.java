@@ -1,5 +1,6 @@
 package spring;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.MessageSource;
@@ -7,15 +8,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Locale;
 
-
-
-//
 @SpringBootApplication
+@EnableSwagger2
 public class SpringBootApp {
+
 
     public static void main(String[] args){
        SpringApplication.run(SpringBootApp.class, args);
@@ -36,5 +40,8 @@ public class SpringBootApp {
         return messageSource;
 
     }
+
+
+
 
 }

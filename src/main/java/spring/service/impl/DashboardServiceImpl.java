@@ -1,11 +1,10 @@
 package spring.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.entity.Employee;
 import spring.entity.Vehicle;
 import spring.exceptions.EmployeeNotFoundException;
@@ -15,11 +14,12 @@ import spring.repositories.VehicleRepository;
 import spring.service.DashboardService;
 
 import javax.persistence.EntityNotFoundException;
+import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class DashboardServiceImpl implements DashboardService {
-
 
     @Autowired
     private Personnel personnel;
@@ -30,9 +30,13 @@ public class DashboardServiceImpl implements DashboardService {
     @RequestMapping("/employees/{employeeId}")
     public Employee getEmployeeById(@PathVariable int employeeId) {
 
-        Employee employee = personnel.getOne(employeeId);
-        if(employee == null){
+        Employee employee = null;
+        try {
+            employee  = personnel.getOne(employeeId);
 
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+            throw new EmployeeNotFoundException(employeeId);
         }
 
         return employee;
@@ -56,7 +60,8 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Override
     public Employee saveEmployee(Employee employee){
-        return personnel.save(employee);
+        personnel.save(employee);
+        return employee;
     }
 
 

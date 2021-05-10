@@ -78,4 +78,13 @@ public class Address implements Serializable {
     public void setCity(String city) {
         this.city = city;
     }
+
+    public void show() {
+        System.out.println("addressId = " + addressId);
+        System.out.println("houseNameNumber = " + houseNameNumber);
+        System.out.println("address_1 = " + address_1);
+        System.out.println("address_2 = " + address_2);
+        System.out.println("postCode = " + postCode);
+        System.out.println("city = " + city);
+    }
 }

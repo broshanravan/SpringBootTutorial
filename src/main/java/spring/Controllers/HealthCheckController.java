@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
+@RequestMapping("/api")
 class HealthCheckController {
 
 

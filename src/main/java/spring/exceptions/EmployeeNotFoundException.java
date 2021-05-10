@@ -14,17 +14,15 @@ public class EmployeeNotFoundException extends ResourceNotFoundException{
     private String details;
 
 
-    public EmployeeNotFoundException(String message, Date date, String message1, String details) {
+    public EmployeeNotFoundException(String message, Date date,String details) {
+        super();
         this.date = date;
-        this.message = message1;
+        this.message = message;
         this.details = details;
     }
 
-    public EmployeeNotFoundException( int employeeId) {
-
+    public EmployeeNotFoundException(int employeeId) {
         this.message ="Employee with Id:" + employeeId + " not found" ;
-
-
     }
 
     public Date getDate() {

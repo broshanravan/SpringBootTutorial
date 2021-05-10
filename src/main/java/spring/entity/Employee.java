@@ -1,5 +1,6 @@
 package spring.entity;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,9 +19,10 @@ public class Employee implements Serializable {
     private int employeeId;
 
     @Column(name="first_name")
-    @Size(min =2, message= "name should have at lleast two characters")
+    @Size(min =2, message= "name should have at least two characters")
     private String firstName;
 
+    @Size(min =3, message= "surname should have at least three characters")
     @Column(name="surname")
     private String surname;
 
@@ -32,6 +34,13 @@ public class Employee implements Serializable {
 
     public Employee(int employeeId, String firstName, String surname, String department, int addressId) {
         this.employeeId = employeeId;
+        this.firstName = firstName;
+        this.surname = surname;
+        this.department = department;
+        this.addressId = addressId;
+    }
+
+    public Employee(String firstName, String surname, String department, int addressId) {
         this.firstName = firstName;
         this.surname = surname;
         this.department = department;
