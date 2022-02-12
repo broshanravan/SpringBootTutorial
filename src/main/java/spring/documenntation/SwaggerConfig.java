@@ -13,7 +13,7 @@ import java.util.Collections;
 
 @Configuration
 @EnableSwagger2
-public class SwagerConfig {
+public class SwaggerConfig {
 
     /**
      * this method will customize the html file for swagger to only include the
