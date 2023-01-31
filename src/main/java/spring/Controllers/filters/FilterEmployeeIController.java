@@ -18,7 +18,7 @@ import spring.repositories.FilteredPersonnel;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api")
 public class FilterEmployeeIController {
 
     @Autowired

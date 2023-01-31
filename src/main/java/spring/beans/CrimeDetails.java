@@ -16,7 +16,7 @@ public class CrimeDetails implements Serializable {
     public String categurey;
 
     @Column(name="location_id")
-    public Location locationId;
+    public int locationId;
 
 
 }

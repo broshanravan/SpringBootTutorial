@@ -14,100 +14,117 @@ import java.io.Serializable;
 @JsonFilter("EmployeeFilter")
 public class FilteredEmployee implements Serializable {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        @Column(name ="employee_id", unique = true, nullable = false)
-        private int employeeId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name ="employee_id", unique = true, nullable = false)
+    private int employeeId;
 
-        @Column(name="first_name")
-        @Size(min =2, message= "name should have at least two characters")
-        private String firstName;
+    @Column(name="first_name")
+    @Size(min =2, message= "name should have at least two characters")
+    private String firstName;
 
-        @Size(min =3, message= "surname should have at least three characters")
-        @Column(name="surname")
-        private String surname;
+    @Size(min =3, message= "surname should have at least three characters")
+    @Column(name="surname")
+    private String surname;
 
-        @Column(name="department")
-        private String department;
+    @Column(name="department")
+    private String department;
 
-        @Column(name="address_id")
-        private int addressId;
+    @Column(name="address_id")
+    private int addressId;
 
-        public FilteredEmployee(int employeeId, String firstName, String surname, String department, int addressId) {
-            this.employeeId = employeeId;
-            this.firstName = firstName;
-            this.surname = surname;
-            this.department = department;
-            this.addressId = addressId;
-        }
+    @Column(name="nino")
+    private String nino;
 
-        public FilteredEmployee(String firstName, String surname, String department, int addressId) {
-            this.firstName = firstName;
-            this.surname = surname;
-            this.department = department;
-            this.addressId = addressId;
-        }
+    public FilteredEmployee(int employeeId, String firstName, String surname, String department, int addressId, String nino) {
+        this.employeeId = employeeId;
+        this.firstName = firstName;
+        this.surname = surname;
+        this.department = department;
+        this.addressId = addressId;
+        this.nino =nino;
 
-        public FilteredEmployee() {
+    }
+
+    public FilteredEmployee(String firstName, String surname, String department, int addressId,String nino) {
+        this.firstName = firstName;
+        this.surname = surname;
+        this.department = department;
+        this.addressId = addressId;
+        this.nino = nino;
+    }
+
+    public FilteredEmployee() {
 
 
-        }
+    }
 
-        public FilteredEmployee(Employee employee) {
-            this.employeeId = employee.getEmployeeId();
-            this.firstName = employee.getFirstName();
-            this.surname = employee.getSurname();
-            this.department = employee.getDepartment();
-            this.addressId = employee.getAddressId();
+    public FilteredEmployee(Employee employee) {
+        this.employeeId = employee.getEmployeeId();
+        this.firstName = employee.getFirstName();
+        this.surname = employee.getSurname();
+        this.department = employee.getDepartment();
+        this.addressId = employee.getAddressId();
+        this.nino = employee.getNino();
+        this.nino = employee.getNino();
 
-        }
+    }
 
-        @JsonProperty
-        public int getEmployeeId() {
-            return employeeId;
-        }
+    @JsonProperty
+    public int getEmployeeId() {
+        return employeeId;
+    }
 
-        public void setEmployeeId(int employeeId) {
-            this.employeeId = employeeId;
-        }
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
 
-        @JsonProperty
-        public String getFirstName() {
-            return firstName;
-        }
+    @JsonProperty
+    public String getFirstName() {
+        return firstName;
+    }
 
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-        @JsonProperty
-        public String getSurname() {
-            return surname;
-        }
+    @JsonProperty
+    public String getSurname() {
+        return surname;
+    }
 
-        public void setSurname(String surname) {
-            this.surname = surname;
-        }
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
 
-        @JsonProperty
-        public String getDepartment() {
-            return department;
-        }
+    @JsonProperty
+    public String getDepartment() {
+        return department;
+    }
 
-        public void setDepartment(String department) {
-            this.department = department;
-        }
+    public void setDepartment(String department) {
+        this.department = department;
+    }
 
-        @JsonProperty
-        public int getAddressId() {
-            return addressId;
-        }
+    @JsonProperty
+    public int getAddressId() {
+        return addressId;
+    }
 
-        public void setAddressId(int addressId) {
-            this.addressId = addressId;
-        }
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
+    }
 
-        public void show(){
+    @JsonProperty
+    public String getNino() {
+        return nino;
+    }
+
+    public void setNino(String nino) {
+        this.nino = nino;
+    }
+
+    public void show(){
 
             System.out.println("employeeId = " + employeeId);
             System.out.println("firstName = " + firstName);

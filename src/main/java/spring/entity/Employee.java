@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
-@Table(name="employee", schema = "Mehr_Test")
+@Table(name="employee", schema = "mehr_dev")
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 public class Employee implements Serializable {
 
@@ -32,19 +32,24 @@ public class Employee implements Serializable {
     @Column(name="address_id")
     private int addressId;
 
-    public Employee(int employeeId, String firstName, String surname, String department, int addressId) {
+    @Column(name="nino")
+    private String nino;
+
+    public Employee(int employeeId, String firstName, String surname, String department, int addressId,String nino) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.surname = surname;
         this.department = department;
         this.addressId = addressId;
+        this.nino =nino;
     }
 
-    public Employee(String firstName, String surname, String department, int addressId) {
+    public Employee(String firstName, String surname, String department, int addressId,String nino) {
         this.firstName = firstName;
         this.surname = surname;
         this.department = department;
         this.addressId = addressId;
+        this.nino =nino;
     }
 
     public Employee() {
@@ -94,6 +99,27 @@ public class Employee implements Serializable {
 
     public void setAddressId(int addressId) {
         this.addressId = addressId;
+    }
+
+    @JsonProperty
+    public String getNino() {
+        return nino;
+    }
+
+    public void setNino(String nino) {
+        this.nino = nino;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employeeId=" + employeeId +
+                ", firstName='" + firstName + '\'' +
+                ", surname='" + surname + '\'' +
+                ", department='" + department + '\'' +
+                ", addressId=" + addressId +
+                ", nino='" + nino + '\'' +
+                '}';
     }
 
     public void show(){
