@@ -27,7 +27,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(getApiDetails())
                 .select()
-                .paths(PathSelectors.ant("/api/**"))
+                .paths(PathSelectors.any())
                 .build();
     }
 

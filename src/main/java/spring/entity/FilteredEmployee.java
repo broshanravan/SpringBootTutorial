@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
-@Table(name="employee", schema = "Mehr_Test")
+@Table(name="Filtered_employee", schema = "Mehr_Test")
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 @JsonFilter("EmployeeFilter")
 public class FilteredEmployee implements Serializable {

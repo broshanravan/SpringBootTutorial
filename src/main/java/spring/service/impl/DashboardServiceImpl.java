@@ -5,10 +5,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import spring.entity.Address;
 import spring.entity.Employee;
 import spring.entity.Vehicle;
 import spring.exceptions.EmployeeNotFoundException;
 import spring.exceptions.VehicleNotFoundException;
+import spring.repositories.AddressInventory;
 import spring.repositories.Personnel;
 import spring.repositories.VehicleRepository;
 import spring.service.DashboardService;
@@ -26,6 +28,17 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Autowired
     VehicleRepository vehicleRepository;
+
+    @Autowired
+    AddressInventory addressInventory;
+
+
+    @RequestMapping("/saveAddress")
+    public Address saveAddress(Address address){
+        addressInventory.save(address);
+        return address;
+
+    }
 
     @RequestMapping("/employees/{employeeId}")
     public Employee getEmployeeById(@PathVariable int employeeId) {

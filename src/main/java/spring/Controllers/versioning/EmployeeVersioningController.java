@@ -80,9 +80,15 @@ public class EmployeeVersioningController {
 
 
     @GetMapping(value = "allEmployees/param", params ="version=2")
-    public List<Employee> getAllEmployeesReqParams() {
+    public List<Employee> getAllEmployeesReqParamsV1() {
         List<Employee> allEmployees = personnel.findAll();
         return allEmployees;
+    }
+
+    @GetMapping(value = "allEmployees/param", params ="version=3")
+    public List<FilteredEmployee> getAllEmployeesReqParamsV2() {
+        List<FilteredEmployee> filteredEmployees = filteredPersonnel.findAll();
+        return filteredEmployees;
     }
 
 
@@ -112,6 +118,7 @@ public class EmployeeVersioningController {
 
 
     /**
+     * MediaType
      * uses the header parameter "Accept"
      * this also called mime type versioning
      * @return
