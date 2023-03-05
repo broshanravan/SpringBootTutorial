@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,16 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import spring.entity.Employee;
 import spring.entity.FilteredEmployee;
-import spring.exceptions.EmployeeNotFoundException;
 import spring.repositories.FilteredPersonnel;
 
 import java.util.List;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api")
 public class FilterEmployeeIController {
 
     @Autowired
@@ -62,41 +56,5 @@ public class FilterEmployeeIController {
         mapping.setFilters(filters);
         return mapping;
     }
-
-    @GetMapping("/filteredHateosEmployee/{employeeId}")
-    @ApiOperation(value ="To get an employee details with address Id filtered",
-            notes= "It returns all details for a particular employee except the addressId which is not relevant,with a link to all",
-            response=Employee.class)
-    public Resource<Employee> retrieveHateosOneEmployeeFilterAdd(@ApiParam(value="The Id number you need to pass in order to get the details of the employee",
-            required =true) @PathVariable int employeeId){
-
-        FilteredEmployee filteredEmployee = personnel.getOne(employeeId);
-        SimpleBeanPropertyFilter filter  = SimpleBeanPropertyFilter.filterOutAllExcept("firstName","surname", "department");
-        FilterProvider filters = new SimpleFilterProvider().addFilter("EmployeeFilter",filter);
-        MappingJacksonValue mapping = new MappingJacksonValue(filteredEmployee);
-        mapping.setFilters(filters);
-
-        Resource<Employee> employeeResource = null;
-        try{
-            FilteredEmployee employee = personnel.getOne(employeeId);
-            employee.show();
-
-            employeeResource = new Resource(employee);
-            ControllerLinkBuilder linkTo =  linkTo(methodOn(this.getClass()).retrieveEmployeesFilterAdd());
-
-            employeeResource.add(linkTo.withRel("all-employees-EmployeeFilter"));
-
-
-        }catch(Exception e){
-            e.printStackTrace();
-            throw  new EmployeeNotFoundException(employeeId);
-        }
-
-
-
-
-        return employeeResource;
-    }
-
 
 }

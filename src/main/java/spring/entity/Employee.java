@@ -6,11 +6,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-
 import java.io.Serializable;
 
 @Entity
-@Table(name="employee", schema = "mehr_dev")
+@Table(name="EMPLOYEE", schema = "MEHR_DEVELOPMENT")
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 public class Employee implements Serializable {
 
@@ -24,7 +23,6 @@ public class Employee implements Serializable {
     private String firstName;
 
     @Size(min =3, message= "surname should have at least three characters")
-    @JsonProperty("employee_surname")
     @Column(name="surname")
     private String surname;
 
@@ -45,15 +43,14 @@ public class Employee implements Serializable {
         this.addressId = addressId;
         this.nino =nino;
     }
-/*
+
     public Employee(String firstName, String surname, String department, int addressId,String nino) {
         this.firstName = firstName;
         this.surname = surname;
         this.department = department;
         this.addressId = addressId;
-        this.nino = nino;
+        this.nino =nino;
     }
-*/
 
     public Employee() {
 

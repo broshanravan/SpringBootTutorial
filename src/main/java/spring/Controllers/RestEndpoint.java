@@ -1,6 +1,5 @@
 package spring.Controllers;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -90,7 +89,6 @@ public class RestEndpoint {
         return courseInfo;
     }
 
-
     @RequestMapping("/employee/{employeeId}")
     public Resource<Employee> getEmployeeById(@PathVariable int employeeId)  {
 
@@ -98,7 +96,7 @@ public class RestEndpoint {
          * HATEOAS all employees link to other methods
          * This feature can all link to all other method
          * the advantage is that in case the link for child method is changed
-         * the link provided by parent method does not need to be changes
+         * the lonk provided by parent method does not need to be changef
          */
         Resource<Employee> employeeResource = null;
         try{
@@ -132,16 +130,6 @@ public class RestEndpoint {
 
         dashboardServiceImpl.saveEmployee(employee);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(employee.getEmployeeId()).toUri();
-
-        return ResponseEntity.created(location).build();
-
-    }
-
-    @PostMapping("/saveAddress")
-    public ResponseEntity savelAddress(@RequestBody Address address) {
-
-        dashboardServiceImpl.saveAddress(address);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(address.getAddressId()).toUri();
 
         return ResponseEntity.created(location).build();
 
